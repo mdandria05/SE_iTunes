@@ -10,7 +10,7 @@ class DAO:
         result = []
 
         cursor = conn.cursor(dictionary=True)
-        query = """ SELECT a.id, a.title, a.artist_id
+        query = """ SELECT a.id, a.title, a.artist_id, album_minuti.minuti
                     FROM (SELECT album_id, (SUM(milliseconds)/1000)/60 as minuti
 		                    FROM track
 		                    GROUP BY album_id) as album_minuti,
