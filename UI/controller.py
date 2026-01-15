@@ -8,7 +8,6 @@ class Controller:
         self._model = model
 
     def _fill_dropdown(self):
-        """Popola il dropdown con i rifugi presenti nel grafo."""
         self._view.dd_album.options.clear()
         all_album = self._model.getNodes()
 
