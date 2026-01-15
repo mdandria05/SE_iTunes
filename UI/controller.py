@@ -13,7 +13,7 @@ class Controller:
 
         for a in all_album:
             # Solo text e data: value non serve
-            option = ft.dropdown.Option(text=a)
+            option = ft.dropdown.Option(key=a.id,text=a)
             self._view.dd_album.options.append(option)
 
         # aggiorna il dropdown
@@ -50,14 +50,8 @@ class Controller:
         """ Handler per gestire il problema ricorsivo di ricerca del set di album """""
         # TODO
         self._view.lista_visualizzazione_3.controls.clear()
-        path = self._model.get_info(self._view.txt_durata_totale.value, self._view.dd_album.value)
-        somma = 0
-        if path == None:
-            self._view.show_alert("Nessuna playlist trovata")
-            return 0
-        for p in path.values():
-            somma+=p
-        self._view.lista_visualizzazione_3.controls.append(ft.Text(f"Set Trovato ({len(path)}, durata {somma:0.2f})"))
-        for k,m in path.items():
-            self._view.lista_visualizzazione_3.controls.append(ft.Text(f"-{k} ({m:0.2f} min)"))
+        path,peso = self._model.get_info(self._view.dd_album.value, float(self._view.txt_durata_totale.value))
+        self._view.lista_visualizzazione_3.controls.append(ft.Text(f"Set trovato ({len(path)} album, durata: {peso:0.2f} minuti):"))
+        for p in path:
+            self._view.lista_visualizzazione_3.controls.append(ft.Text(f"- {p.title} ({p.minuti:0.2f} min))"))
         self._view.update()
